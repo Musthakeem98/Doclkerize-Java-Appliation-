@@ -1,0 +1,30 @@
+version: "3"
+services:
+  js-file:
+    container_name: js-file
+    image: js-file
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+    networks:
+      - node-webapp-network
+      
+  mongo:
+    container_name: mongo-container
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: your_password_here
+    ports:
+      - '27018:27017' 
+    networks:
+      - node-webapp-network   
+              
+networks:
+  node-webapp-network:
+    driver: bridge 
